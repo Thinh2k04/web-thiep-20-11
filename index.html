@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10 - Dành Tặng Người Thương</title>
+  <meta name="description"
+    content="Thiệp chúc mừng ngày Phụ Nữ Việt Nam 20/10 thiết kế riêng sang trọng, rực rỡ với hiệu ứng 3D, âm nhạc và những lời chúc yêu thương ngọt ngào nhất.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400;1,600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="locked">
+
+  <!-- ================= CANVAS BACKGROUND LAYERS ================= -->
+  <canvas id="stars" class="layer"></canvas>
+  <canvas id="petals" class="layer"></canvas>
+  <canvas id="lanterns" class="layer"></canvas>
+  <canvas id="fx" class="layer"></canvas>
+  <canvas id="trail" class="layer"></canvas>
+
+  <!-- ================= FLOATING MUSIC CONTROL (RECIPIENT) ================= -->
+  <button class="floating-music-btn" id="btnMusic" title="Bật / Tắt giai điệu hộp nhạc" aria-label="Bật tắt nhạc">
+    <span class="music-disc">🎵</span>
+    <span class="sound-wave">
+      <i></i><i></i><i></i><i></i>
+    </span>
+  </button>
+
+  <!-- ================= ACCESS GATE: BẮT BUỘC ĐÚNG LINK CỦA TỪNG NGƯỜI ================= -->
+  <div class="no-link-gate" id="noLinkGate" style="display: none;">
+    <div class="gate-card">
+      <div class="gate-icon">💌</div>
+      <div class="gate-badge">THIỆP 20/10 THIẾT KẾ RIÊNG</div>
+      <h2 class="gate-title">Cần Đường Link Của Từng Người</h2>
+      <p class="gate-desc">
+        Mỗi tấm thiệp 20/10 là một món quà đặc biệt được tạo riêng cho từng người.<br>
+        <b>Bắt buộc phải mở đúng đường link riêng</b> do người thương gửi tặng bạn để mở thiệp!
+      </p>
+      <div class="gate-hint">
+        💡 Nếu bạn vừa nhận được link qua Zalo, Messenger hoặc SMS, hãy mở trực tiếp link đó nhé.
+      </div>
+      <div class="gate-admin-action">
+        <p style="font-size: 13.5px; color: rgba(255,255,255,0.7); margin-bottom: 12px;">Bạn là người gửi và muốn tạo
+          link riêng cho từng người?</p>
+        <a href="admin.html" class="btn-go-admin">👑 Vào Trang Quản Trị Để Tạo Link Cho Từng Người</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCENE 1: PHONG BÌ HOÀNG GIA 3D ================= -->
+  <div id="intro">
+    <div class="intro-bg-glow"></div>
+    <div class="intro-stardust"></div>
+    <div class="intro-flowers" id="introFlowers"></div>
+
+    <div class="intro-header">
+      <div class="intro-badge">✨ THIỆP CHÚC MỪNG ĐẶC BIỆT ✨</div>
+      <h1 class="intro-title">Bạn Có Một Bức Thư Yêu Thương</h1>
+      <p class="intro-sub">Một món quà ngọt ngào dành riêng cho ngày 20 tháng 10</p>
+    </div>
+
+    <div class="env-wrap">
+      <div class="orbit" id="orbit"></div>
+
+      <!-- Cành hoa trang trí 2 bên phong bì -->
+      <div class="env-bouquet left">
+        <span class="bq-item bq-1">🌹</span>
+        <span class="bq-item bq-2">🌸</span>
+        <span class="bq-item bq-3">🌷</span>
+        <span class="bq-item bq-4">✨</span>
+      </div>
+      <div class="env-bouquet right">
+        <span class="bq-item bq-1">🌺</span>
+        <span class="bq-item bq-2">🌼</span>
+        <span class="bq-item bq-3">🌹</span>
+        <span class="bq-item bq-4">✨</span>
+      </div>
+
+      <div class="envelope" id="envelope">
+        <div class="env-back">
+          <div class="env-lining"></div>
+        </div>
+
+        <!-- Lá thư trượt từ bên trong -->
+        <div class="env-paper" id="paper">
+          <div class="paper-inner">
+            <div class="paper-border">
+              <span class="corner c-tl">✤</span>
+              <span class="corner c-tr">✤</span>
+              <span class="corner c-bl">✤</span>
+              <span class="corner c-br">✤</span>
+
+              <div class="paper-header">
+                <span class="paper-sub">Happy Vietnamese Women's Day</span>
+                <div class="paper-date-wrap">
+                  <span class="paper-num">20</span>
+                  <span class="paper-dot">✦</span>
+                  <span class="paper-num">10</span>
+                </div>
+              </div>
+              <div class="paper-recipient">
+                <span class="rec-label">Kính tặng</span>
+                <span class="rec-name" id="introRecName">Người phụ nữ tuyệt vời</span>
+              </div>
+              <div class="paper-divider">
+                <span>❦</span>
+              </div>
+              <p class="paper-teaser">Mong bạn luôn rạng rỡ, xinh đẹp và ngập tràn hạnh phúc mỗi ngày!</p>
+              <div class="paper-roses">🌹 ✦ 🌷 ✦ 🌹</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="env-front">
+          <div class="f-left"></div>
+          <div class="f-right"></div>
+          <div class="f-bottom"></div>
+        </div>
+        <div class="env-flap">
+          <div class="flap-pattern"></div>
+        </div>
+
+        <!-- Con dấu sáp hoàng gia -->
+        <button class="seal" id="seal" aria-label="Chạm để mở thiệp">
+          <span class="seal-ring"><em class="rb rb-l"></em><em class="rb rb-r"></em></span>
+          <span class="seal-inner">
+            <span class="seal-heart">♥</span>
+            <span class="seal-text">20·10</span>
+          </span>
+          <span class="seal-glow"></span>
+        </button>
+      </div>
+
+      <div class="env-shadow"></div>
+      <div class="env-petals">
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+    </div>
+
+    <div class="intro-hint-wrap">
+      <div class="intro-hint">
+        <span class="hint-hand">👆</span> Chạm vào <b>con dấu sáp</b> hoặc phong bì để mở thư
+      </div>
+      <div class="intro-sound-note">💡 Bật âm thanh để tận hưởng giai điệu hộp nhạc du dương</div>
+    </div>
+  </div>
+
+  <!-- ================= SCENE 2: NỘI DUNG CHÍNH (MAIN EXPERIENCE) ================= -->
+  <main id="main">
+
+    <!-- SECTION 1: HERO RỰC RỠ -->
+    <section class="sec-hero" id="hero">
+      <div class="hero-crown">
+        <span class="crown-spark">✨</span>
+        <span class="crown-text">NGÀY PHỤ NỮ VIỆT NAM</span>
+        <span class="crown-spark">✨</span>
+      </div>
+
+      <div class="big-date" id="bigDate">
+        <span class="d-char">2</span>
+        <span class="d-char">0</span>
+        <span class="d-slash">/</span>
+        <span class="d-char">1</span>
+        <span class="d-char">0</span>
+      </div>
+
+      <h1 class="hero-title">Chúc Mừng Ngày 20 Tháng 10</h1>
+
+      <div class="hero-to-card">
+        <div class="to-card-inner">
+          <span class="to-label">Gửi trọn yêu thương đến:</span>
+          <div class="to-name-row">
+            <span class="to-decor">🌹</span>
+            <span class="to-name" id="toName">Người Phụ Nữ Tuyệt Vời</span>
+            <span class="to-decor">🌹</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <span class="scroll-text">CHUYẾN DU HÀNH YÊU THƯƠNG</span>
+        <div class="scroll-arrow">
+          <span>↓</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: TRÁI TIM ÁNH SÁNG & HOA HỒNG TỎA SÁNG -->
+    <section class="sec-heart">
+      <div class="sec-badge reveal">VƯỜN HOA ÁNH SÁNG</div>
+      <h2 class="sec-title reveal">Trái Tim Yêu Thương</h2>
+      <p class="sec-desc reveal">Chạm hoặc lướt chuột qua trái tim để khơi dậy các hạt bụi sao nhiệm màu</p>
+
+      <div class="heart-container reveal" id="heartWrap">
+        <div class="heart-canvas-wrap">
+          <canvas id="heart"></canvas>
+          <div class="heart-center-msg">
+            <span class="heart-sub">Mãi mãi</span>
+            <span class="heart-word" id="heartLabel">Xinh Đẹp</span>
+            <span class="heart-icon">💖</span>
+          </div>
+        </div>
+
+        <div class="heart-floating-wishes" id="heartWishes">
+          <span class="hw-item hw-1">🌸 Rạng rỡ</span>
+          <span class="hw-item hw-2">✨ Hạnh phúc</span>
+          <span class="hw-item hw-3">💎 Tỏa sáng</span>
+          <span class="hw-item hw-4">🍀 Bình an</span>
+          <span class="hw-item hw-5">👑 Quyến rũ</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: BỨC THƯ NGUYÊN BẢN (TYPED LOVE LETTER) -->
+    <section class="sec-letter">
+      <div class="sec-badge reveal">LỜI TÂM TÌNH</div>
+      <div class="letter-card reveal" id="letter">
+        <div class="letter-ornament top-ornament">
+          <span>❧</span> ✦ <span>❦</span>
+        </div>
+
+        <div class="letter-header">
+          <h2 class="letter-title">Thân gửi người phụ nữ tôi yêu mến ✉️</h2>
+          <div class="letter-controls">
+            <button class="l-ctrl-btn" id="btnReplayLetter" title="Đọc lại từ đầu">🔄 Đọc lại</button>
+            <button class="l-ctrl-btn" id="btnInstantLetter" title="Xem toàn bộ ngay">⚡ Xem hết</button>
+          </div>
+        </div>
+
+        <div class="letter-divider"></div>
+
+        <div class="letter-content">
+          <div id="typed"></div>
+        </div>
+
+        <div class="letter-footer">
+          <div class="letter-stamp">
+            <div class="stamp-inner">20·10<br>BEST WISHES</div>
+          </div>
+          <div class="letter-sign-wrap">
+            <div class="sign-from">Người gửi: <span id="fromNameDisplay">Người luôn trân quý bạn</span></div>
+            <div class="sign-text" id="sign">— Với tất cả sự trân trọng &amp; thương yêu ♡</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: VƯỜN HOA 6 TẤM THIỆP LỜI CHÚC (3D CARDS) -->
+    <section class="sec-cards">
+      <div class="sec-badge reveal">NHỮNG ĐIỀU NGỌT NGÀO</div>
+      <h2 class="sec-title reveal">Vườn Hoa Lời Chúc</h2>
+      <p class="sec-desc reveal">Chạm vào từng đóa hoa để lật mở những lời chúc ngọt ngào nhất 💌</p>
+
+      <div class="cards-quick-actions reveal">
+        <button class="btn-flip-all" id="btnFlipAll">
+          <span class="fa-icon">✨</span> Mở Tất Cả 6 Thiệp
+        </button>
+      </div>
+
+      <div class="garland reveal" id="garland"></div>
+
+      <div class="cards-grid" id="cards">
+        <!-- Injected via JavaScript with 6 premium bespoke cards -->
+      </div>
+    </section>
+
+    <!-- SECTION 5: HỘP QUÀ MAY MẮN (INTERACTIVE UNBOXING) -->
+    <section class="sec-gift">
+      <div class="sec-badge reveal">BẤT NGỜ DÀNH CHO BẠN</div>
+      <h2 class="sec-title reveal">Hộp Quà May Mắn 20/10</h2>
+      <p class="sec-desc reveal">Hãy chạm vào hộp quà để mở gói điều bất ngờ đặc quyền ngày hôm nay!</p>
+
+      <div class="gift-box-wrap reveal" id="giftBoxWrap">
+        <div class="gift-glow"></div>
+        <div class="gift-box" id="giftBox">
+          <div class="gift-lid">
+            <div class="gift-bow">
+              <span class="bow-left"></span>
+              <span class="bow-right"></span>
+              <span class="bow-center">🎀</span>
+            </div>
+            <div class="lid-ribbon"></div>
+          </div>
+          <div class="gift-base">
+            <div class="base-ribbon-v"></div>
+            <div class="base-ribbon-h"></div>
+            <div class="gift-tag">Chạm để mở 🎁</div>
+          </div>
+        </div>
+
+        <!-- The voucher that pops out -->
+        <div class="privilege-card" id="privilegeCard">
+          <div class="p-card-header">
+            <span class="p-stars">✨ ✨ ✨</span>
+            <h3>PHIẾU ĐẶC QUYỀN 20/10</h3>
+            <span class="p-code">NO. 2010-VIP-FOREVER</span>
+          </div>
+          <div class="p-card-body">
+            <div class="p-item">
+              <span class="p-icon">👸</span>
+              <div class="p-text">
+                <b>Đặc quyền 1: Nữ Hoàng Hôm Nay</b>
+                <p>Được yêu chiều vô điều kiện 24/7, luôn đúng trong mọi hoàn cảnh!</p>
+              </div>
+            </div>
+            <div class="p-item">
+              <span class="p-icon">🍹</span>
+              <div class="p-text">
+                <b>Đặc quyền 2: Miễn Mọi Lo Toan</b>
+                <p>Nghỉ ngơi thả ga, không cần rửa bát, dọn dẹp hay suy nghĩ muộn phiền.</p>
+              </div>
+            </div>
+            <div class="p-item">
+              <span class="p-icon">🌟</span>
+              <div class="p-text">
+                <b>Đặc quyền 3: Vạn Sự Như Ý</b>
+                <p>Bất kỳ điều ước nào được nói ra trong hôm nay đều sẽ sớm thành hiện thực!</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-card-footer">
+            <button class="btn-again" id="btnGiftAgain">🎁 Đóng hộp &amp; nhận quà khác</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: KHUNG ẢNH KỶ NIỆM (MEMORY PHOTO FRAME) -->
+    <section class="sec-memory">
+      <div class="sec-badge reveal">KỶ NIỆM ĐẸP</div>
+      <h2 class="sec-title reveal">Góc Yêu Thương</h2>
+      <p class="sec-desc reveal">Lưu giữ khoảnh khắc rạng rỡ của người phụ nữ tuyệt vời nhất</p>
+
+      <div class="memory-card reveal" id="memoryCard">
+        <div class="frame-wrap">
+          <div class="frame-border">
+            <div class="frame-photo-box" id="photoBox">
+              <img id="memoryImg"
+                src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=800&auto=format&fit=crop"
+                alt="Bó hoa hồng 20/10 tươi thắm">
+              <div class="photo-overlay">
+                <span class="photo-badge">✨ Nhan Sắc Rạng Ngời ✨</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="memory-caption">
+          <h3 id="memoryTitle">"Nụ cười của bạn là điều kỳ diệu nhất hôm nay!"</h3>
+          <p id="memorySub">Cảm ơn vì đã đem đến cho thế giới này sự dịu dàng, nụ cười và nguồn năng lượng ấm áp.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: THẢ ĐÈN LỒNG ƯỚC NGUYỆN & PHÁO HOA FINALE -->
+    <section class="sec-finale">
+      <div class="finale-content">
+        <div class="sec-badge reveal">BẦU TRỜI ƯỚC NGUYỆN</div>
+        <h2 class="finale-big reveal">Mãi Xinh Đẹp, Hạnh Phúc &amp; An Nhiên!</h2>
+        <p class="finale-sub reveal">Hãy viết một điều ước và thả chiếc đèn lồng bay lên bầu trời đêm 20/10</p>
+
+        <!-- Lantern wishing input -->
+        <div class="wish-form reveal" id="wishForm">
+          <input type="text" id="wishInput" placeholder="Nhập điều ước của bạn cho ngày 20/10..." maxlength="60">
+          <button class="btn-lantern" id="btnSendLantern">
+            <span>🏮</span> Thả Đèn Lồng
+          </button>
+        </div>
+
+        <div class="finale-actions reveal">
+          <button class="btn-primary" id="boom">
+            <span class="btn-glow-icon">🎆</span> Bắn Pháo Hoa Đại Tiệc
+          </button>
+        </div>
+
+        <p class="firework-tip reveal">💡 Mẹo: Chạm vào bất kỳ điểm nào trên màn hình để phóng pháo hoa rực rỡ!</p>
+
+        <div class="footer-copy reveal">
+          <p>Thiết kế dành riêng ngày Phụ Nữ Việt Nam 20/10</p>
+          <p class="copy-love">Made with love &amp; admiration 💖</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
