@@ -565,9 +565,11 @@ Happy Vietnamese Women's Day! 💐`,
     }
   }
 
-  window.addEventListener('pointermove', e => {
-    addTrail(e.clientX, e.clientY);
-  });
+  if (!IS_MOBILE) {
+    window.addEventListener('pointermove', e => {
+      addTrail(e.clientX, e.clientY);
+    });
+  }
 
   function flowerBurst(x, y, count = 16) {
     const flowers = ['🌸', '🌺', '🌷', '🌼', '🌹', '💖', '✨'];
@@ -641,7 +643,7 @@ Happy Vietnamese Women's Day! 💐`,
     hx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
     heartPoints = [];
-    const count = heartSize < 420 ? 900 : 1400;
+    const count = IS_MOBILE ? 380 : (heartSize < 420 ? 900 : 1400);
 
     for (let i = 0; i < count; i++) {
       const t = rand(0, Math.PI * 2);
@@ -658,8 +660,14 @@ Happy Vietnamese Women's Day! 💐`,
     }
   }
 
+  // Chỉ vẽ trái tim khi nó đang hiện trên màn hình
+  let heartVisible = true;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(es => { heartVisible = es[0].isIntersecting; }).observe(heartCanvas);
+  }
+
   function drawHeart() {
-    if (!heartSize) return;
+    if (!heartSize || !heartVisible) return;
     heartTime += 0.04;
     hx.clearRect(0, 0, heartSize, heartSize);
 
@@ -676,9 +684,13 @@ Happy Vietnamese Women's Day! 💐`,
       const px = cx + (p.baseX + Math.sin(heartTime * 2 + p.offsetX) * 0.4) * scale;
       const py = cy + (p.baseY + Math.cos(heartTime * 2 + p.offsetX) * 0.4) * scale;
 
-      hx.beginPath();
-      hx.arc(px, py, p.radius, 0, Math.PI * 2);
-      hx.fill();
+      if (IS_MOBILE) {
+        hx.fillRect(px - p.radius, py - p.radius, p.radius * 2, p.radius * 2);
+      } else {
+        hx.beginPath();
+        hx.arc(px, py, p.radius, 0, Math.PI * 2);
+        hx.fill();
+      }
     }
     hx.globalCompositeOperation = 'source-over';
     hx.globalAlpha = 1;
@@ -1336,14 +1348,18 @@ Happy Vietnamese Women's Day! 💐`,
   }, 3400);
 
   /* ================= 18. MASTER ANIMATION LOOP ================= */
-  function masterLoop() {
+  // Điện thoại: giới hạn ~30 khung hình/giây để máy không bị nóng & khựng
+  let lastFrame = 0;
+  function masterLoop(now) {
+    requestAnimationFrame(masterLoop);
+    if (IS_MOBILE && now - lastFrame < 32) return;
+    lastFrame = now || 0;
     drawStars();
     drawPetals();
     drawLanterns();
     drawFx();
     drawTrail();
     drawHeart();
-    requestAnimationFrame(masterLoop);
   }
 
   resizeAll();

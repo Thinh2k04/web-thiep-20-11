@@ -3013,3 +3013,21 @@ body { background: #ffe4f0; }
   .intro-hint { display: inline-block; max-width: 92vw; text-align: center; line-height: 1.5; }
   .intro-hint b { margin: 0 4px; }
 }
+
+/* ===== Điện thoại: tắt các hiệu ứng gây vẽ lại liên tục (nguyên nhân lag/khựng) ===== */
+@media (max-width: 768px), (pointer: coarse) {
+  body { background-attachment: scroll; }
+  /* filter (blur, drop-shadow) rất tốn GPU trên điện thoại */
+  *, *::before, *::after { filter: none !important; }
+  /* Hiệu ứng đổi box-shadow / gradient từng khung hình */
+  .seal, .intro-hint, .letter-card::before, .finale-big,
+  main.show .big-date span, .gift-glow, .intro-stardust, .intro-bg-glow {
+    animation: none !important;
+  }
+  main.show .big-date span { opacity: 1; transform: none; }
+  .letter-card::before { display: none; }
+  .gift-glow { opacity: 0.6; }
+  /* Gợi ý trình duyệt tách lớp cho các phần tử chuyển động */
+  .env-wrap, .env-bouquet, .bq-item, .orbit, .intro-flowers > *, .env-petals i { will-change: transform; }
+  canvas { will-change: auto; }
+}
