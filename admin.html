@@ -875,9 +875,8 @@ Happy Vietnamese Women's Day! 💐`
       function exportCardsJs() {
         const map = {};
         cardsList.forEach(c => { map[c.id] = { to: c.to, from: c.from, role: c.role, msg: c.msg, img: c.img }; });
-        const content = '// Tự động tạo từ trang admin - dữ liệu thiệp của từng người
-window.CARDS = ' + JSON.stringify(map, null, 2) + ';
-';
+        const content = '// Tự động tạo từ trang admin - dữ liệu thiệp của từng người' + String.fromCharCode(10) +
+          'window.CARDS = ' + JSON.stringify(map, null, 2) + ';' + String.fromCharCode(10);
         const a = document.createElement('a');
         a.href = URL.createObjectURL(new Blob([content], { type: 'text/javascript' }));
         a.download = 'cards.js';
