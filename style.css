@@ -2997,3 +2997,19 @@ body { background: #ffe4f0; }
   box-shadow: 0 0 0 4px rgba(236, 79, 140, 0.18), 0 6px 18px rgba(216, 27, 96, 0.15);
 }
 #main #wishInput::placeholder { color: #c48aa4 !important; font-style: italic; }
+
+/* ===== Điện thoại: tắt hiệu ứng nặng để không bị sập trang ===== */
+@media (max-width: 768px), (pointer: coarse) {
+  *, *::before, *::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .intro-bg-glow, .intro-title, .env-flap, .f-left, .f-right, .f-bottom,
+  .env-shadow, .intro-stardust, #main .hero-title, #main .big-date {
+    filter: none !important;
+  }
+  .intro-bg-glow { animation: none; }
+  .intro-flowers > *:nth-child(n+9) { display: none; }
+  .intro-hint { gap: 4px; flex-wrap: wrap; justify-content: center; line-height: 1.5; }
+  .intro-hint b { margin: 0 4px; }
+}

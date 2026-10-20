@@ -138,7 +138,11 @@ Happy Vietnamese Women's Day! 💐`,
   };
 
   const $ = id => document.getElementById(id);
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  // Điện thoại: giảm độ phân giải canvas & số hạt để tránh hết bộ nhớ (trang bị "sự cố")
+  const IS_MOBILE = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+  const DPR = IS_MOBILE ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+  const MAX_FX = IS_MOBILE ? 350 : 1200;
+  const MAX_TRAIL = IS_MOBILE ? 80 : 300;
   const rand = (min, max) => Math.random() * (max - min) + min;
   const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 
@@ -161,7 +165,11 @@ Happy Vietnamese Women's Day! 💐`,
 
   let W = window.innerWidth, H = window.innerHeight;
 
+  let lastW = 0;
   function resizeAll() {
+    // Trên điện thoại thanh địa chỉ ẩn/hiện khi cuộn làm đổi chiều cao -> không cấp phát lại canvas
+    if (IS_MOBILE && lastW === window.innerWidth && W) return;
+    lastW = window.innerWidth;
     W = window.innerWidth;
     H = window.innerHeight;
     [starCanvas, petalCanvas, lanternCanvas, fxCanvas, trailCanvas].forEach(c => {
@@ -180,7 +188,7 @@ Happy Vietnamese Women's Day! 💐`,
 
   function initStars() {
     stars = [];
-    const count = Math.min(220, Math.floor((W * H) / 5000));
+    const count = Math.min(IS_MOBILE ? 70 : 220, Math.floor((W * H) / 5000));
     for (let i = 0; i < count; i++) {
       stars.push({
         x: rand(0, W),
@@ -434,6 +442,7 @@ Happy Vietnamese Women's Day! 💐`,
         vy = Math.sin(angle) * speed;
       }
 
+      if (fxParticles.length > MAX_FX) break;
       fxParticles.push({
         x: x,
         y: y,
@@ -527,6 +536,7 @@ Happy Vietnamese Women's Day! 💐`,
   }
 
   function addTrail(x, y, count = 2) {
+    if (trailParticles.length > MAX_TRAIL) return;
     for (let i = 0; i < count; i++) {
       trailParticles.push({
         x: x,
