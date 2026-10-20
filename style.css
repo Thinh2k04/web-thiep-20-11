@@ -3010,6 +3010,6 @@ body { background: #ffe4f0; }
   }
   .intro-bg-glow { animation: none; }
   .intro-flowers > *:nth-child(n+9) { display: none; }
-  .intro-hint { gap: 4px; flex-wrap: wrap; justify-content: center; line-height: 1.5; }
+  .intro-hint { display: inline-block; max-width: 92vw; text-align: center; line-height: 1.5; }
   .intro-hint b { margin: 0 4px; }
 }
