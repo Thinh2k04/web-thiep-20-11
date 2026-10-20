@@ -5,7 +5,7 @@ window.CARDS = {
     "from": "Anh của em ♡",
     "role": "crush",
     "msg": "Nhân ngày Phụ Nữ Việt Nam 20/10, anh muốn gửi đến em tất cả những điều ngọt ngào và chân thành nhất.\n\nChúc em luôn nở nụ cười rạng rỡ như ánh ban mai, luôn xinh đẹp và bình yên trong từng phút giây. Cảm ơn em vì đã xuất hiện, làm cho cuộc sống này trở nên dịu dàng và ý nghĩa hơn bao giờ hết.\n\nMong rằng mỗi ngày của em đều được bao bọc trong yêu thương, niềm vui và những bất ngờ tuyệt vời nhất! 🌹",
-    "img": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=800&auto=format&fit=crop"
+    "img": "https://res.cloudinary.com/dmtek0eaq/image/upload/v1792490232/1792486546276_38046043104079911_1637660617005849370_4b639fbbb852510f436b912103247fe7_asfrtc.jpg"
   },
   "card_mom": {
     "to": "Mẹ Kính Yêu Của Con",
