@@ -438,7 +438,7 @@ Happy Vietnamese Women's Day! 💐`,
   }
 
   function explodeFirework(x, y, color, isHeart) {
-    const count = isHeart ? 110 : 90;
+    const count = IS_MOBILE ? (isHeart ? 60 : 40) : (isHeart ? 110 : 90);
     playFireworkBoom();
 
     for (let i = 0; i < count; i++) {
@@ -904,7 +904,7 @@ Happy Vietnamese Women's Day! 💐`,
     const sealEl = $('seal');
     const rect = sealEl ? sealEl.getBoundingClientRect() : { left: W / 2, top: H / 2, width: 0, height: 0 };
     explodeFirework(rect.left + rect.width / 2, rect.top + rect.height / 2, '#ffd27a', true);
-    flowerBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 35);
+    flowerBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, IS_MOBILE ? 12 : 35);
     playChime(1046, 0.1);
 
     // Step 1: Flap opens
@@ -920,7 +920,7 @@ Happy Vietnamese Women's Day! 💐`,
     setTimeout(() => {
       env.classList.add('s3');
       const b = $('paper').getBoundingClientRect();
-      for (let k = 0; k < 6; k++) {
+      for (let k = 0; k < (IS_MOBILE ? 2 : 6); k++) {
         setTimeout(() => {
           explodeFirework(b.left + rand(0, b.width), b.top + rand(0, b.height), pick(fwColors));
         }, k * 180);
@@ -936,8 +936,11 @@ Happy Vietnamese Women's Day! 💐`,
       let n = 0;
       const iv = setInterval(() => {
         launchFirework();
-        if (++n > 6) clearInterval(iv);
+        if (++n > (IS_MOBILE ? 2 : 6)) clearInterval(iv);
       }, 350);
+
+      // Giải phóng màn phong bì sau khi mờ hẳn để trả bộ nhớ cho điện thoại
+      setTimeout(() => { intro.style.display = 'none'; }, 1500);
 
       // Start smooth auto-scroll tour automatically after admiring hero
       setTimeout(() => {
