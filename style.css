@@ -3036,8 +3036,6 @@ body { background: #ffe4f0; }
 @media (max-width: 768px), (pointer: coarse) {
   /* Trang chính chưa hiện thì không vẽ */
   main:not(.show) { visibility: hidden; }
-  /* Chỉ vẽ các mục gần màn hình */
-  main section { content-visibility: auto; contain-intrinsic-size: auto 900px; }
   .envelope.s3 .env-paper { box-shadow: 0 10px 30px rgba(180, 40, 100, 0.3); }
   .env-wrap, .env-bouquet, .bq-item, .orbit, .intro-flowers > *, .env-petals i { will-change: auto; }
 }
