@@ -927,8 +927,8 @@ Happy Vietnamese Women's Day! 💐`
 
       /* GENERATE EXACT PERSON LINK */
       function makePersonLink(card) {
-        const base = window.location.origin + window.location.pathname.replace('admin.html', 'index.html');
-        const url = new URL(base);
+        // Luôn trỏ về trang thiệp cùng thư mục (chạy được cả local lẫn GitHub Pages)
+        const url = new URL('./', window.location.href);
         url.searchParams.set('to', card.to);
         url.searchParams.set('from', card.from);
         url.searchParams.set('role', card.role || 'crush');
