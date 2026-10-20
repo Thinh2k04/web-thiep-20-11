@@ -672,7 +672,14 @@
         <button type="button" class="btn-add-recipient" id="btnAddNewPerson">
           <span>➕</span> Tạo Thiệp Mới Cho Người Khác
         </button>
+        <button type="button" class="btn-add-recipient" id="btnExportCards" style="background:linear-gradient(135deg,#7b2ff7,#f107a3);">
+          <span>💾</span> Tải File cards.js
+        </button>
       </div>
+      <p style="font-size:13px;opacity:.85;margin:6px 0 12px;line-height:1.5">
+        📌 Link ngắn (<b>?d=...</b>) đọc dữ liệu &amp; ảnh từ file <b>cards.js</b> trên GitHub.
+        Sau khi tạo/sửa thiệp: bấm <b>Tải File cards.js</b> → chép đè vào thư mục dự án → <b>git push</b>. Đợi ~1 phút rồi mới gửi link.
+      </p>
       
       <div class="recipients-list" id="recipientsList">
         <!-- Rendered dynamically via JS -->
@@ -863,6 +870,21 @@ Happy Vietnamese Women's Day! 💐`
       }
 
       let cardsList = loadCards();
+
+      /* XUẤT cards.js ĐỂ ĐẨY LÊN GITHUB */
+      function exportCardsJs() {
+        const map = {};
+        cardsList.forEach(c => { map[c.id] = { to: c.to, from: c.from, role: c.role, msg: c.msg, img: c.img }; });
+        const content = '// Tự động tạo từ trang admin - dữ liệu thiệp của từng người
+window.CARDS = ' + JSON.stringify(map, null, 2) + ';
+';
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([content], { type: 'text/javascript' }));
+        a.download = 'cards.js';
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      }
+      document.getElementById('btnExportCards').addEventListener('click', exportCardsJs);
       let editingCardId = null;
       let currentRole = 'crush';
       let currentPhoto = PHOTO_PRESETS[0].url;
@@ -933,15 +955,9 @@ Happy Vietnamese Women's Day! 💐`
 
       /* GENERATE EXACT PERSON LINK */
       function makePersonLink(card) {
-        // Luôn trỏ về trang thiệp cùng thư mục (chạy được cả local lẫn GitHub Pages)
+        // Link ngắn: dữ liệu + ảnh nằm trong cards.js (chạy tốt trên điện thoại, Zalo, Messenger)
         const url = new URL('./', window.location.href);
-        url.searchParams.set('to', card.to);
-        url.searchParams.set('from', card.from);
-        url.searchParams.set('role', card.role || 'crush');
-        if (card.msg) url.searchParams.set('msg', card.msg);
-        if (card.img && !card.img.startsWith('data:')) {
-          url.searchParams.set('img', card.img);
-        }
+        url.searchParams.set('d', card.id);
         return url.toString();
       }
 

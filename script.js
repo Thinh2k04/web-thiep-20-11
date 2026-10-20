@@ -59,7 +59,13 @@ Happy Vietnamese Women's Day! 💐`,
   };
 
   const urlParams = new URLSearchParams(window.location.search);
-  const hasRecipientLink = urlParams.has('to') || urlParams.has('d');
+  // Link ngắn ?d=id -> lấy dữ liệu từ cards.js
+  const cardId = urlParams.get('d');
+  const savedCard = cardId && window.CARDS && window.CARDS[cardId];
+  if (savedCard) {
+    ['to', 'from', 'role', 'msg', 'img'].forEach(k => { if (savedCard[k]) urlParams.set(k, savedCard[k]); });
+  }
+  const hasRecipientLink = urlParams.has('to');
 
   // Bắt buộc phải có đúng link của từng người, không được bỏ link!
   if (!hasRecipientLink) {
