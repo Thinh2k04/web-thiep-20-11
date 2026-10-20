@@ -3039,3 +3039,22 @@ body { background: #ffe4f0; }
   .envelope.s3 .env-paper { box-shadow: 0 10px 30px rgba(180, 40, 100, 0.3); }
   .env-wrap, .env-bouquet, .bq-item, .orbit, .intro-flowers > *, .env-petals i { will-change: auto; }
 }
+
+/* ===== Lá thư: chữ hồng đậm dễ đọc ===== */
+#main .letter-content, #main .letter-content * {
+  color: #b0154f !important;
+  -webkit-text-fill-color: #b0154f !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+#main .sign-from, #main .sign-from span, #main .sign-text {
+  color: #c2185b !important;
+  -webkit-text-fill-color: #c2185b !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+  opacity: 1 !important;
+}
+#main .l-ctrl-btn {
+  color: #b0154f !important;
+  background: rgba(255, 255, 255, 0.65) !important;
+  border: 1px solid #f4a6c6 !important;
+}
+#main .letter-stamp, #main .stamp-inner { color: #c2185b !important; border-color: #e88bb3 !important; }
