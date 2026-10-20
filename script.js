@@ -137,6 +137,20 @@ Happy Vietnamese Women's Day! 💐`,
     ]
   };
 
+  /* Thiệp người yêu: đổi xưng hô "bạn" -> "em" */
+  if (CONFIG.role === 'crush') {
+    const toEm = t => t.replace(/(^|[^\p{L}])([Bb])ạn(?![\p{L}])(?! bè)/gu, (m, pre, b) => pre + (b === 'B' ? 'Em' : 'em'));
+    CONFIG.cards.forEach(c => Object.keys(c).forEach(k => { if (typeof c[k] === 'string') c[k] = toEm(c[k]); }));
+    ['intro', 'main'].forEach(id => {
+      const root = document.getElementById(id);
+      if (!root) return;
+      const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      let n;
+      while ((n = w.nextNode())) n.nodeValue = toEm(n.nodeValue);
+      root.querySelectorAll('[placeholder]').forEach(el => { el.placeholder = toEm(el.placeholder); });
+    });
+  }
+
   const $ = id => document.getElementById(id);
   // Điện thoại: giảm độ phân giải canvas & số hạt để tránh hết bộ nhớ (trang bị "sự cố")
   const IS_MOBILE = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
