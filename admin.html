@@ -750,6 +750,12 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    // Link người nhận (có ?to= hoặc ?d=) mở nhầm trang admin -> chuyển sang trang thiệp
+    (function () {
+      var q = new URLSearchParams(location.search);
+      if (q.has('to') || q.has('d')) location.replace(new URL('./', location.href).href + location.search + location.hash);
+    })();
+
     (function () {
       'use strict';
 
